@@ -17,8 +17,6 @@ if (!VERIFY_TOKEN) {
 var PORT = process.env.PORT || 3000;
 
 app.post('/analyze', (req, res) => {
-  var msg = 'nothingness';
-
   if (req.body.token != VERIFY_TOKEN) {
     return res.status(401).send('Unauthorized.');
   }
@@ -28,16 +26,12 @@ app.post('/analyze', (req, res) => {
   }
 
   if (req.body.text == 'help') {
-    msg = 'insert help message here';
-  }
-
-  else {
-    msg = 'analyzing image...';
+    msg = 'insert help message here'
   }
 
   res.status(200).send({
-    'response_type': 'in_channel',
-    'text': msg,
+    'response_type' : 'in_channel',
+    'text' : msg
   });
 });
 
