@@ -43,25 +43,24 @@ app.post('/analyze', (req, res) => {
     return res.status(401).send('Unauthorized.');
   }
 
-  var receivedText = req.body.text;
-  var responseUrl = req.body.response_url;
-
-  if (!receivedText) {
+  if (req.body.text) {
     console.error('No image URL provided.');
   }
 
-  if (receivedText == 'help') {
-    textToSend = 'Copy your favorite image URL and try this:  "/analyze <image-url>". :see_no_evil:';
-  }
+  if (req.body.text == 'help') {
+    res.status(200).send({
+      'response_type': 'in_channel',
+      'text': 'Copy your favorite image URL and try this:  "/analyze <image-url>". :see_no_evil:'
+    });
+  } 
 
   else {
-    textToSend = 'Analyzing image... :sparkles:'
+    res.status(200).send({
+      'response_type': 'in_channel',
+      'text': 'Analyzing image... :sparkles:'
+    });
   }
 
-  res.status(200).send({
-    'response_type' : 'in_channel',
-    'text' : textToSend
-  });
 });
 
 app.listen(PORT, (err) => {
