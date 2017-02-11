@@ -27,8 +27,11 @@ var PORT = process.env.PORT || 3000;
 function analyzeImage(imgUrl) {
   analyzeApp.models.predict(Clarifai.GENERAL_MODEL, imgUrl).then(
     (res) => {
-      console.log(res);
-      //return res;
+      var tags = []
+      for (var i=0; i<10; i++) {
+        tags.push(JSON.stringify(res['outputs'][0]['data']['concepts'][i]['name']));
+      }
+      return tags.toString();
     },  
     (err) => {
       console.error(err);
@@ -36,27 +39,31 @@ function analyzeImage(imgUrl) {
 }
 
 app.post('/analyze', (req, res) => {
-  var msg;
   if (req.body.token != VERIFY_TOKEN) {
     return res.status(401).send('Unauthorized.');
   }
 
-  if (!req.body.text) {
-    console.error('No image URL provided.');
+  var receivedText = req.body.text;
+  var textToSend;
+  var imgTags;
+
+  if (!receivedText) {
+    console.error('No image URL provided. Try "help" for more information.');
   }
 
-  if (req.body.text == 'help') {
-    msg = 'insert help message here';
+  if (receivedText == 'help') {
+    textToSend = 'insert help message here';
   }
 
   else {
-    analyzeImage(req.body.text);
-    msg = 'analyzing...';
+    imgTags = analyzeImage(receivedText);
+    opening = "This image contains: ";
+    textToSend = opening.concat(imgTags);
   }
 
   res.status(200).send({
     'response_type' : 'in_channel',
-    'text' : msg
+    'text' : textToSend
   });
 });
 
