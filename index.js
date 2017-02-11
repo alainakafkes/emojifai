@@ -44,21 +44,18 @@ app.post('/analyze', (req, res) => {
   }
 
   var receivedText = req.body.text;
-  var textToSend;
-  var imgTags;
+  var responseUrl = req.body.response_url;
 
   if (!receivedText) {
-    console.error('No image URL provided. Try "help" for more information.');
+    console.error('No image URL provided.');
   }
 
   if (receivedText == 'help') {
-    textToSend = 'insert help message here';
+    textToSend = 'Copy your favorite image URL and try this:  "/analyze <image-url>". :see_no_evil:';
   }
 
   else {
-    imgTags = analyzeImage(receivedText);
-    opening = "This image contains: ";
-    textToSend = opening.concat(imgTags);
+    textToSend = 'Analyzing image... :sparkles:'
   }
 
   res.status(200).send({
