@@ -1,0 +1,23 @@
+{
+  "name": "emojifai",
+  "version": "1.0.0",
+  "description": "Slack slash command that converts images to emojis using the Clarifai API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alainakafkes/emojifai.git"
+  },
+  "author": "Alaina Kafkes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alainakafkes/emojifai/issues"
+  },
+  "homepage": "https://github.com/alainakafkes/emojifai#readme",
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "express": "^4.14.1"
+  }
+}
